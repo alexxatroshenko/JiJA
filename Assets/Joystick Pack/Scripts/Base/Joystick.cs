@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
+    
     public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
@@ -15,6 +16,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         set { handleRange = Mathf.Abs(value); }
     }
 
+   
     public float DeadZone
     {
         get { return deadZone; }
@@ -33,15 +35,20 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
+
     private RectTransform baseRect = null;
 
     private Canvas canvas;
     private Camera cam;
+    private ShootWayRaycaster shootWayRaycaster;
+    protected ShootWayRenderer shootWayRenderer;
 
     private Vector2 input = Vector2.zero;
 
     protected virtual void Start()
     {
+        shootWayRaycaster = FindObjectOfType<ShootWayRaycaster>();
+        shootWayRenderer = FindObjectOfType<ShootWayRenderer>();
         HandleRange = handleRange;
         DeadZone = deadZone;
         baseRect = GetComponent<RectTransform>();
@@ -55,7 +62,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchorMax = center;
         handle.pivot = center;
         handle.anchoredPosition = Vector2.zero;
+
     }
+    
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
@@ -64,6 +73,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public void OnDrag(PointerEventData eventData)
     {
+        DrawWayLine();
+
         cam = null;
         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
             cam = canvas.worldCamera;
@@ -74,6 +85,17 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
         handle.anchoredPosition = input * radius * handleRange;
+    }
+
+    private void DrawWayLine()
+    {
+        RaycastHit hit = shootWayRaycaster.Raycast();
+
+        if (hit.collider != null)
+        {
+            Vector3 wayPoint = hit.point;
+            shootWayRenderer.DrawWay(wayPoint);
+        }
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)

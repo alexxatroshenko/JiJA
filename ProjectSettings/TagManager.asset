@@ -5,12 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Collectable
-  - lol
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
