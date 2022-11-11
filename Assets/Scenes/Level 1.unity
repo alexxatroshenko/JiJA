@@ -951,6 +951,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1967969341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1249093278085822020, guid: e9f95c06f7fe60b498d7239404fbd89d, type: 3}
+  m_PrefabInstance: {fileID: 7473121409539288011}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!108 &2138677392 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 3798607756772799537, guid: c686bcc53c186444b98a90e2be249409, type: 3}
@@ -1046,6 +1057,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DataManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1383347885829913742, guid: 9be01c243cad00f41aff361689f70fbc, type: 3}
+      propertyPath: tmPro
+      value: 
+      objectReference: {fileID: 1967969341}
     - target: {fileID: 1383347885829913742, guid: 9be01c243cad00f41aff361689f70fbc, type: 3}
       propertyPath: GameScore
       value: 0
@@ -1703,6 +1718,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 168656700}
+    - target: {fileID: 2872498346958768715, guid: e9f95c06f7fe60b498d7239404fbd89d, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4350711942100238761, guid: e9f95c06f7fe60b498d7239404fbd89d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

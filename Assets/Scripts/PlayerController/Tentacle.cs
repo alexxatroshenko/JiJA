@@ -28,16 +28,22 @@ public class Tentacle : MonoBehaviour
             tentacleSpeed = UnspeededTentacleAnim;
             playerAnimator.SetFloat("AnimSpeed", UnspeededTentacleAnim);
         }
+        if (DataManager.isMagneted)
+        {
+            FindObjectOfType<TentacleMagnet>().GetComponent<CapsuleCollider>().enabled = true;
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         ManagePlayerState(other);
+
         playerAnimator.SetTrigger("StopPull");
+
 
     }
 
-    private void ManagePlayerState(Collider other)
+    protected virtual void ManagePlayerState(Collider other)
     {
         if (other.gameObject.CompareTag("Collectable"))
         {
@@ -46,7 +52,6 @@ public class Tentacle : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Enemy"))
         {
-
             player.Decrease();
         }
     }

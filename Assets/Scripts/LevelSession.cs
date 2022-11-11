@@ -9,14 +9,21 @@ public class LevelSession : MonoBehaviour
     [SerializeField] private UnityEvent levelCompleted;
     [SerializeField] private TextMeshProUGUI levelCompletedScoreCount;
     private int levelScore;
+    private DataManager dataManager;
+
+    private void Start()
+    {
+        dataManager = FindObjectOfType<DataManager>();
+    }
     public void LevelComplete(int Score)
     {
         levelScore = Score;
         if (FindObjectsOfType<Jelly>().Length == 1)
         {
             FindObjectOfType<DataManager>().GameScore += Score;
+            dataManager.DisableAllBoosters(); 
             StartCoroutine(InvokeLevelCompletedEvent(0.5f));
-            DataManager.isSpeeded = false;
+
         }
     }
 

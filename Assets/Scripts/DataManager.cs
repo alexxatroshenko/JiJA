@@ -8,9 +8,11 @@ using TMPro;
 public class DataManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tmPro;
-    [SerializeField] public static bool isSpeeded;
-    [SerializeField] private UnityEvent ChangedScene;
+    public static bool isSpeeded;
     public static bool isMagneted;
+    [SerializeField] private UnityEvent ChangedScene;
+    [SerializeField] public int LevelNumber = 0;
+    
     public static DataManager Instance { get; private set; }
     public int GameScore;
     private void Awake()
@@ -26,6 +28,17 @@ public class DataManager : MonoBehaviour
         
         DontDestroyOnLoad(gameObject);
         
+    }
+    private void Start()
+    {
+        SceneManager.activeSceneChanged += ChangedActiveScene;
+    }
+    public void ChangedActiveScene(Scene current, Scene next)
+    {
+        if (next.buildIndex != 0)
+        {
+            LevelNumber = SceneManager.GetActiveScene().buildIndex;
+        }
     }
 
     private void Update()

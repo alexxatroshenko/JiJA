@@ -19,9 +19,13 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.LoadScene(currentSceneIndex + 1);
     }
-    public void LoadFirstLevel()
+    public void LoadLevelFromMainMenu()
     {
-        SceneManager.LoadScene(1);
+        var levelNumber = FindObjectOfType<DataManager>().LevelNumber;
+        if (levelNumber != 0)
+            SceneManager.LoadScene(levelNumber);
+        else
+            SceneManager.LoadScene(1);
     }
 
     public void LoadMainMenu()

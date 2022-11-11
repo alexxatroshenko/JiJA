@@ -16,16 +16,8 @@ public class Booster : MonoBehaviour
     [SerializeField] private Boosters booster;//будет отображатся как дропдаун
     [SerializeField] private int intBoosterAmount = 0;
     [SerializeField] private TextMeshProUGUI textBoosterCost;
-    [SerializeField] private TextMeshProUGUI textBoosterAmount;
     private bool boosterIsTaken = false;
-    private int previousSceneIndex;
 
-    private void Start()
-    {
-        textBoosterAmount.text = intBoosterAmount.ToString();
-    }
-
-    
     private void Update()
     {
         CheckForExistance();
@@ -33,7 +25,8 @@ public class Booster : MonoBehaviour
 
     private void CheckForExistance()
     {
-        if (textBoosterAmount.text == "0")
+        var cost = ReturnCost();
+        if (FindObjectOfType<DataManager>().GameScore < cost)
         {
             GetComponent<Button>().interactable = false;
         }
@@ -41,7 +34,7 @@ public class Booster : MonoBehaviour
 
     public void BuyBooster()
     {
-        int cost = int.Parse(textBoosterCost.text);
+        var cost = ReturnCost();
         if (!boosterIsTaken && FindObjectOfType<DataManager>().GameScore >= cost)
         {
             CheckSelectedBooster();
@@ -50,12 +43,16 @@ public class Booster : MonoBehaviour
         }
     }
 
+    private int ReturnCost()
+    {
+        int cost = int.Parse(textBoosterCost.text);
+        return cost;
+    }
+
     private void ProcessBoosterCost(int cost)
     {
         FindObjectOfType<DataManager>().GameScore -= cost;
         textBoosterCost.text = cost.ToString();
-        intBoosterAmount--;
-        textBoosterAmount.text = intBoosterAmount.ToString();
     }
 
     private void CheckSelectedBooster()
